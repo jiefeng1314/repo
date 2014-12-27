@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 顶层菜单 -->
+	<definition name="topmenu" template="/WEB-INF/views/topmenu.jsp" />
+	<!-- 二级菜单菜单 -->
+	<definition name="submenu" template="/WEB-INF/views/submenu.jsp" />
+	<!-- 左侧菜单 -->
+	<definition name="left" template="/WEB-INF/views/left.jsp" />
+	<!-- 主模板 -->
+	<definition name="base.definition" template="/WEB-INF/views/template.jsp">
+		<put-attribute name="topmenu" value="topmenu" />
+		<put-attribute name="submenu" value="submenu" />
+		<put-attribute name="left" value="left" />
+	</definition>
+	<definition name="index" extends="base.definition">
+		<!-- put-attribute name="right" value="right" /-->
+	</definition>
+	
+	<!-- 登录 -->
+	<definition name="login" template="/WEB-INF/views/login.jsp"/>
+	
+	<!-- 首页 -->
+	<definition name="index" template="/WEB-INF/views/index.jsp"/>
+	
+</tiles-definitions>

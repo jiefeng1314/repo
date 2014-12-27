@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	<global-method-security pre-post-annotations="enabled">
+		<expression-handler ref="expressionHandler" />
+	</global-method-security>
+
+	<beans:bean id="expressionHandler"
+		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+		<beans:property name="permissionEvaluator" ref="permissionEvaluator" />
+	</beans:bean>
+	
+	<http auto-config="true">
+		<intercept-url pattern="/logon*" filters="none" />
+		<intercept-url pattern="/logout*" filters="none" />
+		<intercept-url pattern="/notFound.do" filters="none" />
+		<intercept-url pattern="/forbidden.do" filters="none" />
+        <intercept-url pattern="/login*" filters="none" />
+		<intercept-url pattern="/favicon.ico" filters="none" />
+		<intercept-url pattern="/css/**" filters="none" />
+		<intercept-url pattern="/js/**" filters="none" />
+		<intercept-url pattern="/html/**" filters="none" />
+		<intercept-url pattern="/images/**" filters="none" />
+		<intercept-url pattern="/**" access="ROLE_USER"  />
+		<form-login login-page='/login.do' default-target-url='/index.do'
+			always-use-default-target='true' authentication-failure-url="/logon.do?login_error=1" />
+		<logout logout-url="/j_spring_security_logout"
+			logout-success-url="/login.do" invalidate-session="true" />
+		<access-denied-handler error-page="/forbidden.do" />
+	</http>
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="passwordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

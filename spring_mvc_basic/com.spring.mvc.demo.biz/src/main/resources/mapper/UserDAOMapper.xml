@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.demo.biz.integration.dao.UserDAO">
+
+	<resultMap type="com.spring.demo.biz.dto.User" id="userResultMap">
+		<id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="ENABLED" jdbcType="VARCHAR" property="enabled"/>
+		<result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="POS_CODE" jdbcType="VARCHAR" property="posCode" />
+		<result column="POS_NAME" jdbcType="VARCHAR" property="posName" />
+		<result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" />
+		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+	</resultMap>
+
+	<insert id="insertUser" parameterType="com.spring.demo.biz.dto.User">
+		insert into t_user(
+			CREATED_BY	    ,
+			UPDATED_BY      ,
+			user_id       	,
+			user_name     	,
+			password      	,
+			enabled       	,
+			dept_code     	,
+			dept_name     	,
+			pos_code      	,
+			pos_name      	,
+			mobile_phone  	,
+			email         	,
+			entry_date    	,
+			leave_date    	 
+		 )values(
+		 	#{createdBy      ,jdbcType=VARCHAR   },
+		 	#{updatedBy      ,jdbcType=VARCHAR   },
+			upper(#{userId  ,jdbcType=VARCHAR   }),
+			#{userName      ,jdbcType=VARCHAR   },
+			#{password      ,jdbcType=VARCHAR   },
+			#{enabled       ,jdbcType=VARCHAR   },
+			#{deptCode      ,jdbcType=VARCHAR   },
+			#{deptName      ,jdbcType=VARCHAR   },
+			#{posCode       ,jdbcType=VARCHAR   },
+			#{posName       ,jdbcType=VARCHAR   },
+			#{mobilePhone   ,jdbcType=VARCHAR   },
+			#{email         ,jdbcType=VARCHAR   },
+			to_date(#{entryDate     ,jdbcType=VARCHAR   }, 'yyyy-mm-dd'),
+			to_date(#{leaveDate     ,jdbcType=VARCHAR   }, 'yyyy-mm-dd') 
+		)
+	</insert>
+
+	<select id="queryUser" resultMap="userResultMap">
+		SELECT user_id,
+		user_name,
+		enabled,
+		password,
+		dept_code,
+		dept_name,
+		pos_code,
+		pos_name,
+		mobile_phone,
+		email
+		FROM T_USER
+		WHERE
+		user_id=upper(#{userId})
+	</select>
+
+	<select id="queryAllUserList" resultMap="userResultMap">
+		SELECT user_id,
+		user_name,
+		enabled,
+		password,
+		dept_code,
+		dept_name,
+		pos_code,
+		pos_name,
+		mobile_phone,
+		email
+		FROM T_USER
+	</select>
+</mapper>
